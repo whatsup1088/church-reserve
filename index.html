@@ -93,26 +93,30 @@
             const dataSheetURL =
                 "https://spreadsheets.google.com/feeds/list/1ZkgUOVrsbgHPSXQLzzYRXXNEAs7ckaCzOWGiXU5KCY8/3/public/values?alt=json"
 
-            $.get(dataSheetURL, function (data) {
-                let d = data.feed.entry;
+            function fetchData() {
+                items = {};
 
-                for (let i in d) {
-                    if (!d[i].gsx$timestamp.$t || d[i].gsx$isduplicate.$t === 'TRUE') {
-                        continue;
+                $.get(dataSheetURL, function (data) {
+                    let d = data.feed.entry;
+
+                    for (let i in d) {
+                        if (!d[i].gsx$timestamp.$t || d[i].gsx$isduplicate.$t === 'TRUE') {
+                            continue;
+                        }
+                        let item = {};
+                        item.timestamp = d[i].gsx$timestamp.$t;
+                        item.name = d[i].gsx$name.$t;
+                        item.phone = d[i].gsx$phone.$t;
+                        item.session = d[i].gsx$session.$t;
+                        (items[item.session] || (items[item.session] = [])).push(item);
                     }
-                    let item = {};
-                    item.timestamp = d[i].gsx$timestamp.$t;
-                    item.name = d[i].gsx$name.$t;
-                    item.phone = d[i].gsx$phone.$t;
-                    item.session = d[i].gsx$session.$t;
-                    (items[item.session] || (items[item.session] = [])).push(item);
-                }
 
-                updateInfo(items);
+                    updateInfo(items);
 
-            }).fail(function() {
-                $.ajax(this);
-            });
+                }).fail(function() {
+                    $.ajax(this);
+                });
+            }
 
             function updateInfo(items) {
                 let session_1_reserve = items['第一場 上午 9:00'].length,
@@ -141,6 +145,10 @@
                 $('#numberOfStandBy_1').text(session_1_standby)
                 $('#numberOfStandBy_2').text(session_2_standby)
             }
+
+            $("#reserve").on('load', function() {
+                fetchData();
+            });
 
             $("#inquire_btn").click(function (){
                 let target = [],
