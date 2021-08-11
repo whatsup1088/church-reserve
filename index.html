@@ -41,27 +41,6 @@
         <div class="text-center p-3 mt-4 mb-4 bg-light rounded-3">
             <h1>宏恩教會實體聚會預約平台</h1>
         </div>
-<form class="m-4">
-                        <div class="form-group">
-                            <h4>場次</h4>
-                            <select class="form-control" id="select_session">
-                                <option value="第一場 上午 9:00">第一場 上午 9:00</option>
-                                <option value="第二場 上午 10:30">第二場 上午 10:30</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                          <h4>請輸入預約者的姓氏</h4>
-                          <h6 class="form-text text-muted">Ex: 陳<br>若為複姓請輸入第一個字 Ex: 歐陽 請輸入 "歐"</h6>
-                          <input type="text" class="form-control" id="first_name">
-                        </div>
-                        <div class="form-group">
-                          <h4>請輸入手機後三碼</h4>
-                          <h6 class="form-text text-muted">Ex: 842</h6>
-                          <input type="text" class="form-control" id="phone">
-                        </div>
-                        <div id="inquire_btn" role="button" class="btn btn-primary">查詢</div>
-                    </form>
-
         <div class="row p-1 mt-2 mb-2">
             <h3 class="col mb-2 text-center"><span class="text-danger">第一場</span>已預約人數: <b class="text-info" id="numberOfReserve_1"></b> 人</h3>
             <h3 class="col mb-2 text-center"><span class="text-danger">第一場</span>候補人數: <b class="text-info" id="numberOfStandBy_1"></b> 人</h3>
@@ -87,7 +66,27 @@
                 <iframe id="reserve" class="d-none" src="https://docs.google.com/forms/d/e/1FAIpQLSe4kiAS6vHRTrKox314CJ84Al_dcZdRS9I5PE4LBRN_RGlcNg/viewform?embedded=true" width="640" height="800" frameborder="0" marginheight="0" marginwidth="0">載入中…</iframe>
                 <iframe id="cancel" class="d-none" src="https://docs.google.com/forms/d/e/1FAIpQLSfrfuGAEDPsu4lrX9bi-c0lkHagF41z3be2X54gmSRbiKn0QQ/viewform?embedded=true" width="640" height="800" frameborder="0" marginheight="0" marginwidth="0">載入中…</iframe>
                 <div id="inquire" class="d-none">
-                                        <div id="resultList" class="row row-cols-1 g-3"></div>
+                    <form class="m-4">
+                        <div class="form-group">
+                            <h4>場次</h4>
+                            <select class="form-control" id="select_session">
+                                <option value="第一場 上午 9:00">第一場 上午 9:00</option>
+                                <option value="第二場 上午 10:30">第二場 上午 10:30</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                          <h4>請輸入預約者的姓氏</h4>
+                          <h6 class="form-text text-muted">Ex: 陳<br>若為複姓請輸入第一個字 Ex: 歐陽 請輸入 "歐"</h6>
+                          <input type="text" class="form-control" id="first_name">
+                        </div>
+                        <div class="form-group">
+                          <h4>請輸入手機後三碼</h4>
+                          <h6 class="form-text text-muted">Ex: 842</h6>
+                          <input type="text" class="form-control" id="phone">
+                        </div>
+                        <div id="inquire_btn" role="button" class="btn btn-primary">查詢</div>
+                    </form>
+                    <div id="resultList" class="row row-cols-1 g-3"></div>
                 </div>
             </div>
         </div>
