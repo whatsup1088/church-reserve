@@ -33,6 +33,9 @@
     <div class="container">
         <div class="text-center p-3 mt-4 mb-4 bg-light rounded-3">
             <h1>宏恩教會實體聚會預約平台</h1>
+            <div class="alert alert-warning" role="alert">
+                疫情警戒第二級期間，經提防疫計畫後，每場實體聚會人數上限為 100 人
+            </div>
         </div>
         <div class="row p-1 mt-2 mb-2">
             <h3 class="col mb-2 text-center"><span class="text-danger">第一場</span>已預約人數: <b class="text-info" id="numberOfReserve_1"></b> 人</h3>
@@ -89,7 +92,9 @@
     <script>
         $(document).ready(function ($) {
             let items = {},
+                retain = {'第一場 上午 9:00': 21, '第二場 上午 10:30': 28},
                 limit = 100;
+
             const dataSheetURL =
                 "https://spreadsheets.google.com/feeds/list/1ZkgUOVrsbgHPSXQLzzYRXXNEAs7ckaCzOWGiXU5KCY8/3/public/values?alt=json"
 
@@ -108,6 +113,7 @@
                         item.name = d[i].gsx$name.$t;
                         item.phone = d[i].gsx$phone.$t;
                         item.session = d[i].gsx$session.$t;
+                        item.cancel = d[i].gsx$iscanceled.$t;
                         (items[item.session] || (items[item.session] = [])).push(item);
                     }
 
@@ -119,8 +125,8 @@
             }
 
             function updateInfo(items) {
-                let session_1_reserve = items['第一場 上午 9:00'].length,
-                    session_2_reserve = items['第二場 上午 10:30'].length,
+                let session_1_reserve = retain['第一場 上午 9:00'] + items['第一場 上午 9:00'].length,
+                    session_2_reserve = retain['第二場 上午 10:30'] + items['第二場 上午 10:30'].length,
                     session_1_standby = 0,
                     session_2_standby = 0;
 
@@ -151,7 +157,7 @@
             });
 
             $("#inquire_btn").click(function (){
-                let target = [],
+                let target_items = [],
                     select_session = $("#select_session").val(),
                     first_name = $("#first_name").val(),
                     phone = $("#phone").val();
@@ -168,28 +174,35 @@
 
                 items[select_session].forEach(function(value, index){
                     if (value.name === first_name && value.phone === phone) {
-                        value.index = index+1;
-                        target.push(value);
+                        value.index = retain[select_session] + index + 1;
+                        target_items[0] = value;
                     }
                 });
 
                 $('#resultList').html('');
 
-                target.forEach(function (item) {
-                    let order = `${item.index}`;
+                target_items.forEach(function (item) {
+
+                    let order = `${item.index}`,
+                        style = 'text-info';
 
                     if (item.index > limit) {
                         order = `候補 ${item.index - limit}`;
+                    }
+
+                    if (item.cancel === 'TRUE') {
+                        order = '已取消';
+                        style = 'text-danger';
                     }
 
                     const Card = `
                         <div class="card bg-light m-auto" style="max-width: 18rem;">
                             <div class="card-header">查詢結果</div>
                             <div class="card-body">
-                              <h5 class="card-title">預約順位: <b class="text-info">${order}</b></h5>
-                              <h5>預約時間: ${item.timestamp}</h5>
+                              <h5 class="card-title">預約順位: <b class="${style}">${order}</b></h5>
                               <h5>預約姓名: ${item.name}XX</h5>
                               <h5>預約者電話: 09xxxxx${item.phone}</h5>
+                              <h5>最早的有效預約填寫時間: ${item.timestamp}</h5>
                             </div>
                         </div>
                     `;
