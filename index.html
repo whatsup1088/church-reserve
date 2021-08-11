@@ -24,7 +24,7 @@
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             font-family: PingFangTC, sans-serif;
-            background: #EEE;
+            background: aliceblue;
         }
 
         * {
@@ -41,11 +41,16 @@
         <div class="text-center p-3 mt-4 mb-4 bg-light rounded-3">
             <h1>宏恩教會實體聚會預約平台</h1>
         </div>
-        <div class="row">
-            <h3 class="col mb-2 text-center">目前已預約人數: <b class="text-info" id="numberOfReserce"></b> 人</h3>
-            <h3 class="col mb-2 text-center">目前候補人數: <b class="text-info" id="numberOfStandBy"></b> 人</h3>
+        <div class="row p-1 mt-2 mb-2">
+            <h3 class="col mb-2 text-center"><span class="text-danger">第一場</span>已預約人數: <b class="text-info" id="numberOfReserve_1"></b> 人</h3>
+            <h3 class="col mb-2 text-center"><span class="text-danger">第一場</span>候補人數: <b class="text-info" id="numberOfStandBy_1"></b> 人</h3>
         </div>
-        <div class="text-center p-3 mt-4 mb-4 bg-light rounded-lg">
+        <div class="row p-1 mt-2 mb-2">
+            <h3 class="col mb-2 text-center"><span class="text-danger">第二場</span>已預約人數: <b class="text-info" id="numberOfReserve_2"></b> 人</h3>
+            <h3 class="col mb-2 text-center"><span class="text-danger">第二場</span>候補人數: <b class="text-info" id="numberOfStandBy_2"></b> 人</h3>
+        </div>
+
+        <div class="text-center p-3 mt-4 mb-4 rounded-lg">
             <div class="row">
                 <div role="button" class="col-sm menu" data-id="reserve">
                     <h2 class="p-3 mb-2 bg-primary text-white rounded-pill">我要預約</h2>
@@ -53,13 +58,36 @@
                 <div role="button" class="col-sm menu" data-id="cancel">
                     <h2 class="p-3 mb-2 bg-danger text-white rounded-pill">我要取消</h2>
                 </div>
-                <div role="button" class="col-sm menu">
+                <div role="button" class="col-sm menu" data-id="inquire">
                     <h2 class="p-3 mb-2 bg-success text-white rounded-pill">查詢預約記錄<h2>
                 </div>
             </div>
-            <div class="row row-cols-1">
-                <iframe id="reserve" class="d-none" src="https://docs.google.com/forms/d/e/1FAIpQLSe4kiAS6vHRTrKox314CJ84Al_dcZdRS9I5PE4LBRN_RGlcNg/viewform?embedded=true" width="640" height="750" frameborder="0" marginheight="0" marginwidth="0">載入中…</iframe>
-                <iframe id="cancel" class="d-none" src="https://docs.google.com/forms/d/e/1FAIpQLSfrfuGAEDPsu4lrX9bi-c0lkHagF41z3be2X54gmSRbiKn0QQ/viewform?embedded=true" width="640" height="750" frameborder="0" marginheight="0" marginwidth="0">載入中…</iframe>
+            <div class="row p-3 mt-4 mb-4 row-cols-1">
+                <iframe id="reserve" class="d-none" src="https://docs.google.com/forms/d/e/1FAIpQLSe4kiAS6vHRTrKox314CJ84Al_dcZdRS9I5PE4LBRN_RGlcNg/viewform?embedded=true" width="640" height="800" frameborder="0" marginheight="0" marginwidth="0">載入中…</iframe>
+                <iframe id="cancel" class="d-none" src="https://docs.google.com/forms/d/e/1FAIpQLSfrfuGAEDPsu4lrX9bi-c0lkHagF41z3be2X54gmSRbiKn0QQ/viewform?embedded=true" width="640" height="800" frameborder="0" marginheight="0" marginwidth="0">載入中…</iframe>
+                <div id="inquire" class="d-none">
+                    <form class="m-4">
+                        <div class="form-group">
+                            <h4>場次</h4>
+                            <select class="form-control" id="select_session">
+                                <option value="第一場 上午 9:00">第一場 上午 9:00</option>
+                                <option value="第二場 上午 10:30">第二場 上午 10:30</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                          <h4>請輸入預約者的姓氏</h4>
+                          <h6 class="form-text text-muted">Ex: 陳<br>若為複姓請輸入第一個字 Ex: 歐陽 請輸入 "歐"</h6>
+                          <input type="text" class="form-control" id="first_name">
+                        </div>
+                        <div class="form-group">
+                          <h4>請輸入手機後三碼</h4>
+                          <h6 class="form-text text-muted">Ex: 842</h6>
+                          <input type="text" class="form-control" id="phone">
+                        </div>
+                        <div id="inquire_btn" role="button" class="btn btn-primary">查詢</div>
+                    </form>
+                    <div id="resultList" class="row row-cols-1 g-3"></div>
+                </div>
             </div>
         </div>
     </div>
@@ -67,10 +95,116 @@
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script>
         $(document).ready(function ($) {
+            let items = {},
+                limit = 100;
+            const dataSheetURL =
+                "https://spreadsheets.google.com/feeds/list/1ZkgUOVrsbgHPSXQLzzYRXXNEAs7ckaCzOWGiXU5KCY8/3/public/values?alt=json"
+
+            $.get(dataSheetURL, function (data) {
+                let d = data.feed.entry;
+
+                for (let i in d) {
+                    if (!d[i].gsx$timestamp.$t || d[i].gsx$isduplicate.$t === 'True') {
+                        continue;
+                    }
+                    let item = {};
+                    item.timestamp = d[i].gsx$timestamp.$t;
+                    item.name = d[i].gsx$name.$t;
+                    item.phone = d[i].gsx$phone.$t;
+                    item.session = d[i].gsx$session.$t;
+                    (items[item.session] || (items[item.session] = [])).push(item);
+                }
+
+                updateInfo(items);
+
+            }).fail(function() {
+                $.ajax(this);
+            });
+
+            function updateInfo(items) {
+                let session_1_reserve = items['第一場 上午 9:00'].length,
+                    session_2_reserve = items['第二場 上午 10:30'].length,
+                    session_1_standby = 0,
+                    session_2_standby = 0;
+
+                if (session_1_reserve >= limit) {
+                    session_1_standby = session_1_reserve - limit;
+                }
+
+                if (session_2_reserve >= limit) {
+                    session_2_standby = session_2_reserve - limit;
+                }
+
+                if (Math.sign(session_1_reserve)) {
+                    session_1_reserve -= session_1_standby;
+                }
+
+                if (Math.sign(session_2_reserve)) {
+                    session_2_reserve -= session_2_standby;
+                }
+
+                $('#numberOfReserve_1').text(session_1_reserve)
+                $('#numberOfReserve_2').text(session_2_reserve)
+                $('#numberOfStandBy_1').text(session_1_standby)
+                $('#numberOfStandBy_2').text(session_2_standby)
+                console.log(items);
+            }
+
+            $("#inquire_btn").click(function (){
+                let target = [],
+                    select_session = $("#select_session").val(),
+                    first_name = $("#first_name").val(),
+                    phone = $("#phone").val();
+
+                if (!first_name || first_name.length != 1) {
+                    alert("請確認姓氏欄位填寫正確");
+                    return
+                }
+
+                if (!phone || phone.length != 3) {
+                    alert("請確認手機後三碼欄位填寫正確");
+                    return
+                }
+
+                items[select_session].forEach(function(value, index){
+                    if (value.name === first_name && value.phone === phone) {
+                        value.index = index+1;
+                        target.push(value);
+                    }
+                });
+
+                $('#resultList').html('');
+
+                target.forEach(function (item) {
+                    let order = `${item.index}`;
+
+                    if (item.index > limit) {
+                        order = `候補 ${item.index - limit}`;
+                    }
+
+                    const Card = `
+                        <div class="card bg-light m-auto" style="max-width: 18rem;">
+                            <div class="card-header">查詢結果</div>
+                            <div class="card-body">
+                              <h5 class="card-title">預約順位: <b class="text-info">${order}</b></h5>
+                              <h5>預約時間: ${item.timestamp}</h5>
+                              <h5>預約姓名: ${item.name}XX</h5>
+                              <h5>預約者電話: 09xxxxx${item.phone}</h5>
+                            </div>
+                        </div>
+                    `;
+                    $('#resultList').append(Card);
+                });
+
+                if ($('#resultList').html() === '') {
+                    $('#resultList').html('<p class="text-danger">查無預約記錄</p>');
+                }
+            });
+
             $(".menu").click(function (){
                 $("iframe").attr("class", "d-none");
                 let target_id = $(this).data("id");
-                $("#"+target_id+"").attr("class", "d-block");
+                $(`#${target_id}`).attr("class", "d-block");
             });
         });
     </script>
