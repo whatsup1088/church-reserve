@@ -147,7 +147,6 @@
                 $('#numberOfReserve_2').text(session_2_reserve)
                 $('#numberOfStandBy_1').text(session_1_standby)
                 $('#numberOfStandBy_2').text(session_2_standby)
-                console.log(items);
             }
 
             $("#inquire_btn").click(function (){
@@ -203,6 +202,8 @@
 
             $(".menu").click(function (){
                 $("iframe").attr("class", "d-none");
+                $("#inquire").attr("class", "d-none");
+
                 let target_id = $(this).data("id");
                 $(`#${target_id}`).attr("class", "d-block");
             });
