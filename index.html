@@ -62,7 +62,7 @@
                     <h2 class="p-3 mb-2 bg-success text-white rounded-pill">查詢預約記錄<h2>
                 </div>
             </div>
-            <div class="row p-3 mt-4 mb-4 row-cols-1">
+            <div class="p-3 mt-4 mb-4">
                 <iframe id="reserve" class="d-none" src="https://docs.google.com/forms/d/e/1FAIpQLSe4kiAS6vHRTrKox314CJ84Al_dcZdRS9I5PE4LBRN_RGlcNg/viewform?embedded=true" width="640" height="800" frameborder="0" marginheight="0" marginwidth="0">載入中…</iframe>
                 <iframe id="cancel" class="d-none" src="https://docs.google.com/forms/d/e/1FAIpQLSfrfuGAEDPsu4lrX9bi-c0lkHagF41z3be2X54gmSRbiKn0QQ/viewform?embedded=true" width="640" height="800" frameborder="0" marginheight="0" marginwidth="0">載入中…</iframe>
                 <div id="inquire" class="d-none">
@@ -104,7 +104,7 @@
                 let d = data.feed.entry;
 
                 for (let i in d) {
-                    if (!d[i].gsx$timestamp.$t || d[i].gsx$isduplicate.$t === 'True') {
+                    if (!d[i].gsx$timestamp.$t || d[i].gsx$isduplicate.$t === 'TRUE') {
                         continue;
                     }
                     let item = {};
