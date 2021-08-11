@@ -47,6 +47,9 @@
         </div>
 
         <div class="text-center p-3 mt-4 mb-4 rounded-lg">
+            <div class="row p-1 mt-2 mb-2">
+                <h2 id="date" class="col align-self-center"></h2>
+            </div>
             <div class="row">
                 <div role="button" class="col-sm menu" data-id="reserve">
                     <h2 class="p-3 mb-2 bg-primary text-white rounded-pill">我要預約</h2>
@@ -92,6 +95,7 @@
     <script>
         $(document).ready(function ($) {
             let items = {},
+                reserve_date = new Date(new Date().setDate(new Date().getDate() - new Date().getDay() + 7)).toLocaleString().split(' ')[0];
                 retain = {'第一場 上午 9:00': 21, '第二場 上午 10:30': 28},
                 limit = 100;
 
@@ -151,6 +155,8 @@
                 $('#numberOfStandBy_1').text(session_1_standby)
                 $('#numberOfStandBy_2').text(session_2_standby)
             }
+
+            $("#date").html(`預約聚會日期: ${reserve_date}`);
 
             $("#reserve").on('load', function() {
                 fetchData();
