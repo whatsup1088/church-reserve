@@ -104,7 +104,7 @@
                 let d = data.feed.entry;
 
                 for (let i in d) {
-                    if (!d[i].gsx$timestamp.$t || d[i].gsx$isduplicate.$t === 'True') {
+                    if (!d[i].gsx$timestamp.$t || d[i].gsx$isduplicate.$t === 'TRUE') {
                         continue;
                     }
                     let item = {};
