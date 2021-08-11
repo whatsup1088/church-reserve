@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="zh-TW">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="宏恩教會實體聚會預約平台">
+    <meta name="author" content="daniel">
+    <meta property="og:title" content="宏恩教會實體聚會預約平台">
+    <meta property="og:description" content="宏恩教會實體聚會預約平台">
+    <meta property="og:url" content="">
+    <meta property="og:site_name" content="宏恩教會實體聚會預約平台">
+    <meta property="og:image" content="">
+    <meta property="article:publisher" content="https://www.facebook.com/">
+    <title>宏恩教會實體聚會預約平台</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+    <style>
+        ::-webkit-scrollbar {
+            width: 0;
+            background: transparent;
+        }
+
+        body {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            font-family: PingFangTC, sans-serif;
+            background: #EEE;
+        }
+
+        * {
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+    </style>
+<head>
+<body>
+    <div class="container">
+        <div class="text-center p-3 mt-4 mb-4 bg-light rounded-3">
+            <h1>宏恩教會實體聚會預約平台</h1>
+        </div>
+        <div class="row">
+            <h3 class="col mb-2 text-center">目前已預約人數: <b class="text-info" id="numberOfReserce"></b> 人</h3>
+            <h3 class="col mb-2 text-center">目前候補人數: <b class="text-info" id="numberOfStandBy"></b> 人</h3>
+        </div>
+        <div class="text-center p-3 mt-4 mb-4 bg-light rounded-lg">
+            <div class="row">
+                <div role="button" class="col-sm menu" data-id="reserve">
+                    <h2 class="p-3 mb-2 bg-primary text-white rounded-pill">我要預約</h2>
+                </div>
+                <div role="button" class="col-sm menu" data-id="cancel">
+                    <h2 class="p-3 mb-2 bg-danger text-white rounded-pill">我要取消</h2>
+                </div>
+                <div role="button" class="col-sm menu">
+                    <h2 class="p-3 mb-2 bg-success text-white rounded-pill">查詢預約記錄<h2>
+                </div>
+            </div>
+            <div class="row row-cols-1">
+                <iframe id="reserve" class="d-none" src="https://docs.google.com/forms/d/e/1FAIpQLSe4kiAS6vHRTrKox314CJ84Al_dcZdRS9I5PE4LBRN_RGlcNg/viewform?embedded=true" width="640" height="750" frameborder="0" marginheight="0" marginwidth="0">載入中…</iframe>
+                <iframe id="cancel" class="d-none" src="https://docs.google.com/forms/d/e/1FAIpQLSfrfuGAEDPsu4lrX9bi-c0lkHagF41z3be2X54gmSRbiKn0QQ/viewform?embedded=true" width="640" height="750" frameborder="0" marginheight="0" marginwidth="0">載入中…</iframe>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script>
+        $(document).ready(function ($) {
+            $(".menu").click(function (){
+                $("iframe").attr("class", "d-none");
+                let target_id = $(this).data("id");
+                $("#"+target_id+"").attr("class", "d-block");
+            });
+        });
+    </script>
+</body>
+</html>
