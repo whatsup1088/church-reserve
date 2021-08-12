@@ -129,8 +129,8 @@
                             continue;
                         }
 
-                        retain['第一場 上午 9:00'] = 22;
-                        retain['第二場 上午 10:30'] = 29;
+                        retain['第一場 上午 9:00'] = parseInt(d[i].gsx$retain1.$t);
+                        retain['第二場 上午 10:30'] = parseInt(d[i].gsx$retain2.$t);
 
                         let item = {};
                         item.timestamp = d[i].gsx$timestamp.$t;
