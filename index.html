@@ -27,6 +27,10 @@
             background: aliceblue;
         }
 
+        a {
+            color: inherit; /* blue colors for links too */
+            text-decoration: inherit; /* no underline */
+        }
     </style>
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -42,37 +46,37 @@
 </head>
 <body>
     <div class="container">
-        <div class="text-center p-3 mt-4 mb-4 bg-light rounded-3">
-            <h1>宏恩教會實體聚會預約平台</h1>
+        <div class="text-center p-2 mt-2 mb-2 bg-light rounded-3">
+            <h2>宏恩教會實體聚會預約平台</h2>
             <div class="alert alert-warning" role="alert">
                 疫情警戒第二級期間，經提防疫計畫後，每場實體聚會人數上限為 100 人
             </div>
         </div>
-        <div class="row p-1 mt-2 mb-2">
-            <h3 class="col mb-2 text-center"><span class="text-danger">第一場</span>已預約人數: <b class="text-info" id="numberOfReserve_1"></b> 人</h3>
-            <h3 class="col mb-2 text-center"><span class="text-danger">第一場</span>候補人數: <b class="text-info" id="numberOfStandBy_1"></b> 人</h3>
+        <div class="row p-1 mt-1 mb-1">
+            <h4 class="col mb-2 text-center"><span class="text-danger">第一場</span>已預約人數: <b class="text-info" id="numberOfReserve_1"></b> 人</h4>
+            <h4 class="col mb-2 text-center"><span class="text-danger">第一場</span>候補人數: <b class="text-info" id="numberOfStandBy_1"></b> 人</h4>
         </div>
-        <div class="row p-1 mt-2 mb-2">
-            <h3 class="col mb-2 text-center"><span class="text-danger">第二場</span>已預約人數: <b class="text-info" id="numberOfReserve_2"></b> 人</h3>
-            <h3 class="col mb-2 text-center"><span class="text-danger">第二場</span>候補人數: <b class="text-info" id="numberOfStandBy_2"></b> 人</h3>
+        <div class="row p-1 mt-1 mb-1">
+            <h4 class="col mb-2 text-center"><span class="text-danger">第二場</span>已預約人數: <b class="text-info" id="numberOfReserve_2"></b> 人</h4>
+            <h4 class="col mb-2 text-center"><span class="text-danger">第二場</span>候補人數: <b class="text-info" id="numberOfStandBy_2"></b> 人</h4>
         </div>
 
-        <div class="text-center p-3 mt-4 mb-4 rounded-lg">
+        <div class="text-center p-2 mb-1 rounded-lg">
             <div class="row p-1 mt-2 mb-2">
-                <h2 id="date" class="col align-self-center"></h2>
+                <h3 id="date" class="col align-self-center"></h3>
             </div>
             <div class="row">
                 <div role="button" class="col-sm menu" data-id="reserve">
-                    <h2 class="p-3 mb-2 bg-primary text-white rounded-pill">我要預約</h2>
+                    <h2 class="p-3 mb-2 bg-primary text-white rounded-pill"><a href="#form">我要預約</a></h2>
                 </div>
                 <div role="button" class="col-sm menu" data-id="cancel">
-                    <h2 class="p-3 mb-2 bg-danger text-white rounded-pill">我要取消</h2>
+                    <h2 class="p-3 mb-2 bg-danger text-white rounded-pill"><a href="#form">我要取消</a></h2>
                 </div>
                 <div role="button" class="col-sm menu" data-id="inquire">
-                    <h2 class="p-3 mb-2 bg-success text-white rounded-pill">查詢預約記錄<h2>
+                    <h2 class="p-3 mb-2 bg-success text-white rounded-pill"><a href="#form">查詢預約記錄</a><h2>
                 </div>
             </div>
-            <div class="row p-3 mt-4 mb-4 row-cols-1">
+            <div id="form" class="row p-3 mt-4 mb-4 row-cols-1">
                 <iframe id="reserve" class="d-none" src="https://docs.google.com/forms/d/e/1FAIpQLSe4kiAS6vHRTrKox314CJ84Al_dcZdRS9I5PE4LBRN_RGlcNg/viewform?embedded=true" width="640" height="800" frameborder="0" marginheight="0" marginwidth="0">載入中…</iframe>
                 <iframe id="cancel" class="d-none" src="https://docs.google.com/forms/d/e/1FAIpQLSfrfuGAEDPsu4lrX9bi-c0lkHagF41z3be2X54gmSRbiKn0QQ/viewform?embedded=true" width="640" height="800" frameborder="0" marginheight="0" marginwidth="0">載入中…</iframe>
                 <div id="inquire" class="d-none">
