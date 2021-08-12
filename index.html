@@ -111,7 +111,7 @@
         $(document).ready(function ($) {
             let items = {'第一場 上午 9:00':[],'第二場 上午 10:30':[]},
                 reserve_date = new Date(new Date().setDate(new Date().getDate() - new Date().getDay() + 7)).toLocaleString().split(' ')[0];
-                retain = {'第一場 上午 9:00': 22, '第二場 上午 10:30': 29},
+                retain = {'第一場 上午 9:00': 0, '第二場 上午 10:30': 0},
                 limit = 100;
 
             const dataSheetURL =
@@ -124,9 +124,14 @@
                     let d = data.feed.entry;
 
                     for (let i in d) {
+
                         if (!d[i].gsx$timestamp.$t || d[i].gsx$isduplicate.$t === 'TRUE' || d[i].gsx$iscanceled.$t === 'TRUE') {
                             continue;
                         }
+
+                        retain['第一場 上午 9:00'] = 22;
+                        retain['第二場 上午 10:30'] = 29;
+
                         let item = {};
                         item.timestamp = d[i].gsx$timestamp.$t;
                         item.name = d[i].gsx$name.$t;
