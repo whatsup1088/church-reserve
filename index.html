@@ -89,8 +89,8 @@
                             </select>
                         </div>
                         <div class="form-group">
-                          <h4>請輸入預約者的姓氏</h4>
-                          <h6 class="form-text text-muted">Ex: 陳<br>若為複姓請輸入第一個字 Ex: 歐陽 請輸入 "歐"</h6>
+                          <h4>請輸入預約者姓名最後一個字</h4>
+                          <h6 class="form-text text-muted">Ex: 陳大山，請輸入 "山"</h6>
                           <input type="text" class="form-control" id="first_name">
                         </div>
                         <div class="form-group">
@@ -226,7 +226,7 @@
                             <div class="card-header">查詢結果</div>
                             <div class="card-body">
                               <h5 class="card-title">預約順位: <b class="${style}">${order}</b></h5>
-                              <h5>預約姓名: ${item.name}XX</h5>
+                              <h5>預約姓名: XX${item.name}</h5>
                               <h5>預約者電話: 09xxxxx${item.phone}</h5>
                               <h5>最早的有效預約填寫時間: ${item.timestamp}</h5>
                             </div>
