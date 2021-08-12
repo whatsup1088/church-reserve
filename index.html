@@ -109,16 +109,16 @@
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script>
         $(document).ready(function ($) {
-            let items = {},
+            let items = {'第一場 上午 9:00':[],'第二場 上午 10:30':[]},
                 reserve_date = new Date(new Date().setDate(new Date().getDate() - new Date().getDay() + 7)).toLocaleString().split(' ')[0];
-                retain = {'第一場 上午 9:00': 21, '第二場 上午 10:30': 28},
+                retain = {'第一場 上午 9:00': 22, '第二場 上午 10:30': 29},
                 limit = 100;
 
             const dataSheetURL =
                 "https://spreadsheets.google.com/feeds/list/1ZkgUOVrsbgHPSXQLzzYRXXNEAs7ckaCzOWGiXU5KCY8/3/public/values?alt=json"
 
             function fetchData() {
-                items = {};
+                items = {'第一場 上午 9:00':[],'第二場 上午 10:30':[]};
 
                 $.get(dataSheetURL, function (data) {
                     let d = data.feed.entry;
