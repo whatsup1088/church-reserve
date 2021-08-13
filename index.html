@@ -63,8 +63,8 @@
         </div>
 
         <div class="text-center p-2 mb-1 rounded-lg">
-            <div class="row p-1 mt-2 mb-2">
-                <h3 id="date" class="col align-self-center"></h3>
+            <div class="alert alert-primary" role="alert">
+                <div id="date"></div>
             </div>
             <div class="row">
                 <div role="button" class="col-sm menu" data-id="reserve">
@@ -111,7 +111,6 @@
     <script>
         $(document).ready(function ($) {
             let items = {'第一場 上午 9:00':[],'第二場 上午 10:30':[]},
-                reserve_date = new Date(new Date().setDate(new Date().getDate() - new Date().getDay() + 7)).toLocaleString().split(' ')[0];
                 retain = {'第一場 上午 9:00': 0, '第二場 上午 10:30': 0},
                 limit = 100;
 
@@ -179,7 +178,11 @@
                 $('#numberOfStandBy_2').text(session_2_standby)
             }
 
-            $("#date").html(`預約聚會日期: ${reserve_date}`);
+            let today = new Date(),
+                reserveDate = new Date(new Date().setDate(today.getDate() - today.getDay() + 7)),
+                startReserveDate = new Date(new Date().setDate(reserveDate.getDate() - 6)),
+                endReserveDate = new Date(new Date().setDate(reserveDate.getDate() - 2));
+
             if (!(today.getTime() >= startReserveDate.setHours(09,00,00) && today.getTime() <= endReserveDate.setHours(21,00,00))) {
                 Swal.fire({
                   icon: 'warning',
@@ -187,6 +190,14 @@
                   confirmButtonText: '確認',
                 })
             }
+
+            $("#date").html(`
+                <b class="text-dark">${reserveDate.toLocaleDateString()}</b>&nbsp實體禮拜預約<br>
+                ※表單及電話(03-3562527)預約登記時間
+                <b class="text-danger">${startReserveDate.toLocaleDateString()}&nbsp(一)</b>&nbsp至&nbsp
+                <b class="text-danger">${endReserveDate.toLocaleDateString()}&nbsp(五)</b>&nbsp上午&nbsp9：00&nbsp至晚上&nbsp9：00<br>
+                ※非系統開放時間，請洽教會辦公室(03-3562527)
+            `);
 
             $("#reserve").on('load', function() {
                 fetchData();
