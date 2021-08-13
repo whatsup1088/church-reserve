@@ -35,6 +35,7 @@
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-66YX8SE8Z0"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
@@ -179,6 +180,13 @@
             }
 
             $("#date").html(`預約聚會日期: ${reserve_date}`);
+            if (!(today.getTime() >= startReserveDate.setHours(09,00,00) && today.getTime() <= endReserveDate.setHours(21,00,00))) {
+                Swal.fire({
+                  icon: 'warning',
+                  text: '目前非預約期間',
+                  confirmButtonText: '確認',
+                })
+            }
 
             $("#reserve").on('load', function() {
                 fetchData();
@@ -191,12 +199,20 @@
                     phone = $("#phone").val();
 
                 if (!first_name || first_name.length != 1) {
-                    alert("請確認姓氏欄位填寫正確");
+                    Swal.fire({
+                      icon: 'warning',
+                      text: '請確認姓名欄位填寫正確',
+                      confirmButtonText: '確認',
+                    })
                     return
                 }
 
                 if (!phone || phone.length != 3) {
-                    alert("請確認手機後三碼欄位填寫正確");
+                    Swal.fire({
+                      icon: 'warning',
+                      text: '請確認手機後三碼欄位填寫正確',
+                      confirmButtonText: '確認',
+                    })
                     return
                 }
 
