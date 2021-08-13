@@ -135,7 +135,9 @@
                         let item = {};
                         item.timestamp = d[i].gsx$timestamp.$t;
                         item.name = d[i].gsx$name.$t;
+                        item.displayname = d[i].gsx$displayname.$t;
                         item.phone = d[i].gsx$phone.$t;
+                        item.displayphone = d[i].gsx$displayphone.$t;
                         item.session = d[i].gsx$session.$t;
                         item.cancel = d[i].gsx$iscanceled.$t;
                         (items[item.session] || (items[item.session] = [])).push(item);
@@ -226,8 +228,8 @@
                             <div class="card-header">查詢結果</div>
                             <div class="card-body">
                               <h5 class="card-title">預約順位: <b class="${style}">${order}</b></h5>
-                              <h5>預約姓名: XX${item.name}</h5>
-                              <h5>預約者電話: 09xxxxx${item.phone}</h5>
+                              <h5>預約姓名: ${item.displayname}</h5>
+                              <h5>預約者電話: ${item.displayphone}</h5>
                               <h5>最早的有效預約填寫時間: ${item.timestamp}</h5>
                             </div>
                         </div>
