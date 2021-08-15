@@ -117,6 +117,22 @@
             const dataSheetURL =
                 "https://spreadsheets.google.com/feeds/list/1ZkgUOVrsbgHPSXQLzzYRXXNEAs7ckaCzOWGiXU5KCY8/3/public/values?alt=json"
 
+            let today = new Date(),
+                reserveDate = new Date(new Date().setDate(today.getDate() - today.getDay() + 7)),
+                startReserveDate = new Date(new Date().setDate(reserveDate.getDate() - 6)),
+                endReserveDate = new Date(new Date().setDate(reserveDate.getDate() - 2));
+
+            if (!(today.getTime() >= startReserveDate.setHours(09,00,00) && today.getTime() <= endReserveDate.setHours(21,00,00))) {
+                updateInfo(items);
+                Swal.fire({
+                  icon: 'warning',
+                  text: '目前非預約期間',
+                  confirmButtonText: '確認',
+                });
+            } else {
+                fetchData();
+            }
+
             function fetchData() {
                 items = {'第一場 上午 9:00':[],'第二場 上午 10:30':[]};
 
@@ -125,12 +141,12 @@
 
                     for (let i in d) {
 
+                        retain['第一場 上午 9:00'] = parseInt(d[i].gsx$retain1.$t);
+                        retain['第二場 上午 10:30'] = parseInt(d[i].gsx$retain2.$t);
+
                         if (!d[i].gsx$timestamp.$t || d[i].gsx$isduplicate.$t === 'TRUE' || d[i].gsx$iscanceled.$t === 'TRUE') {
                             continue;
                         }
-
-                        retain['第一場 上午 9:00'] = parseInt(d[i].gsx$retain1.$t);
-                        retain['第二場 上午 10:30'] = parseInt(d[i].gsx$retain2.$t);
 
                         let item = {};
                         item.timestamp = d[i].gsx$timestamp.$t;
@@ -178,19 +194,6 @@
                 $('#numberOfStandBy_2').text(session_2_standby)
             }
 
-            let today = new Date(),
-                reserveDate = new Date(new Date().setDate(today.getDate() - today.getDay() + 7)),
-                startReserveDate = new Date(new Date().setDate(reserveDate.getDate() - 6)),
-                endReserveDate = new Date(new Date().setDate(reserveDate.getDate() - 2));
-
-            if (!(today.getTime() >= startReserveDate.setHours(09,00,00) && today.getTime() <= endReserveDate.setHours(21,00,00))) {
-                Swal.fire({
-                  icon: 'warning',
-                  text: '目前非預約期間',
-                  confirmButtonText: '確認',
-                })
-            }
-
             $("#date").html(`
                 <b class="text-dark">${reserveDate.toLocaleDateString()}</b>&nbsp實體禮拜預約<br>
                 ※表單及電話(03-3562527)預約登記時間
@@ -198,10 +201,6 @@
                 <b class="text-danger">${endReserveDate.toLocaleDateString()}&nbsp(五)</b>&nbsp上午&nbsp9：00&nbsp至晚上&nbsp9：00<br>
                 ※非系統開放時間，請洽教會辦公室(03-3562527)
             `);
-
-            $("#reserve").on('load', function() {
-                fetchData();
-            });
 
             $("#inquire_btn").click(function (){
                 let target_items = [],
