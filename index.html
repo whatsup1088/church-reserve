@@ -24,12 +24,24 @@
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             font-family: PingFangTC, sans-serif;
-            background: aliceblue;
+            background-image: url("https://www.coreldraw.com/static/cdgs/images/pages/seo/tips/photo/basics/blur-background/blur-background-og.jpg");
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: center;
+            background-size: cover;
         }
 
         a {
             color: inherit; /* blue colors for links too */
             text-decoration: none !important;
+        }
+
+        h1 {
+            color: white; text-shadow: black 0.1em 0.1em 0.2em
+        }
+
+        .shadow {
+            text-shadow: white 0.1em 0.1em 0.2em;
         }
     </style>
 
@@ -47,19 +59,17 @@
 </head>
 <body>
     <div class="container">
-        <div class="text-center p-2 mt-2 mb-2 bg-light rounded-3">
-            <h2>宏恩教會實體禮拜預約平台</h2>
+        <div class="text-center p-2 mt-2 mb-2 rounded-3">
+            <h1>宏恩教會實體禮拜預約平台</h1>
             <div class="alert alert-warning" role="alert">
                 疫情警戒第二級期間，經提防疫計畫後，每場實體聚會人數上限為 100 人
             </div>
         </div>
-        <div class="row p-1 mt-1 mb-1">
-            <h4 class="col mb-2 text-center"><span class="text-danger">第一場</span>已預約人數: <b class="text-info" id="numberOfReserve_1"></b> 人</h4>
-            <h4 class="col mb-2 text-center"><span class="text-danger">第一場</span>候補人數: <b class="text-info" id="numberOfStandBy_1"></b> 人</h4>
-        </div>
-        <div class="row p-1 mt-1 mb-1">
-            <h4 class="col mb-2 text-center"><span class="text-danger">第二場</span>已預約人數: <b class="text-info" id="numberOfReserve_2"></b> 人</h4>
-            <h4 class="col mb-2 text-center"><span class="text-danger">第二場</span>候補人數: <b class="text-info" id="numberOfStandBy_2"></b> 人</h4>
+        <div class="row p-1 mt-1 mb-1 row-cols-2 shadow">
+            <h4 class="col mb-2 text-center"><span class="text-danger">第一場</span> 已預約人數: <b class="text-info" id="numberOfReserve_1"></b> 人</h4>
+            <h4 class="col mb-2 text-center"><span class="text-danger">第一場</span> 候補人數: <b class="text-info" id="numberOfStandBy_1"></b> 人</h4>
+            <h4 class="col mb-2 text-center"><span class="text-danger">第二場</span> 已預約人數: <b class="text-info" id="numberOfReserve_2"></b> 人</h4>
+            <h4 class="col mb-2 text-center"><span class="text-danger">第二場</span> 候補人數: <b class="text-info" id="numberOfStandBy_2"></b> 人</h4>
         </div>
 
         <div class="text-center p-2 mb-1 rounded-lg">
