@@ -125,7 +125,7 @@
                 limit = 100;
 
             const dataSheetURL =
-                "https://spreadsheets.google.com/feeds/list/1ZkgUOVrsbgHPSXQLzzYRXXNEAs7ckaCzOWGiXU5KCY8/3/public/values?alt=json"
+                "https://sheets.googleapis.com/v4/spreadsheets/1ZkgUOVrsbgHPSXQLzzYRXXNEAs7ckaCzOWGiXU5KCY8/values/table?key=AIzaSyBz-EwHl2quASbDzFAGteprh1oTC60o4dA"
 
             let today = new Date(),
                 reserveDate = new Date(new Date().setDate(today.getDate() - today.getDay() + 7)),
@@ -158,32 +158,36 @@
                 items = {'第一場 上午 9:00':[],'第二場 上午 10:30':[]};
 
                 $.get(dataSheetURL, function (data) {
-                    let d = data.feed.entry;
+                    let d = data.values,
+                        header = d.shift();
 
-                    for (let i in d) {
+                    column = Object.assign({}, ...Object.entries(header).map(([a,b]) => ({ [b]: a })));
+                    console.log(column);
 
-                        retain['第一場 上午 9:00'] = parseInt(d[i].gsx$retain1.$t);
-                        retain['第二場 上午 10:30'] = parseInt(d[i].gsx$retain2.$t);
+                    d.forEach(function (row) {
+                        retain['第一場 上午 9:00'] = parseInt(row[column['retain_1']]);
+                        retain['第二場 上午 10:30'] = parseInt(row[column['retain_2']]);
 
-                        if (!d[i].gsx$timestamp.$t || d[i].gsx$isduplicate.$t === 'TRUE' || d[i].gsx$iscanceled.$t === 'TRUE') {
-                            continue;
+                        if (!row[column['timestamp']] || row[column['is_duplicate']] === 'TRUE' || row[column['is_canceled']] === 'TRUE') {
+                            return;
                         }
 
                         let item = {};
-                        item.timestamp = d[i].gsx$timestamp.$t;
-                        item.name = d[i].gsx$name.$t;
-                        item.displayname = d[i].gsx$displayname.$t;
-                        item.phone = d[i].gsx$phone.$t;
-                        item.displayphone = d[i].gsx$displayphone.$t;
-                        item.session = d[i].gsx$session.$t;
-                        item.cancel = d[i].gsx$iscanceled.$t;
+                        item.timestamp = row[column['timestamp']];
+                        item.name = row[column['name']];
+                        item.displayname = row[column['display_name']];
+                        item.phone = row[column['phone']];
+                        item.displayphone = row[column['display_phone']];
+                        item.session = row[column['session']];
+                        item.cancel = row[column['is_canceled']];
                         (items[item.session] || (items[item.session] = [])).push(item);
-                    }
+                    })
 
+                    console.log(items);
                     updateInfo(items);
 
                 }).fail(function() {
-                    fetchData();
+                    //fetchData();
                 });
             }
 
