@@ -139,7 +139,7 @@
                   text: '目前非預約期間',
                   confirmButtonText: '確認',
                 });
-            } else if (!between(today.getTime(), today.setHours(09,00,00), today.setHours(21,00,00))) {
+            } else if (!between(today.getTime(), today.setHours(09,00,00), today.setHours(21,00,00)) || today.getDay() == 6) {
                 fetchData();
                 Swal.fire({
                   icon: 'warning',
