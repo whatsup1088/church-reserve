@@ -251,7 +251,7 @@
                 }
 
                 items[select_session].forEach(function(value, index){
-                    if (value.name === first_name && value.phone === phone) {
+                    if (value.name == first_name && value.phone == phone) {
                         value.index = retain[select_session] + index + 1;
                         target_items[0] = value;
                     }
@@ -298,6 +298,10 @@
 
                 let target_id = $(this).data("id");
                 $(`#${target_id}`).attr("class", "d-block");
+
+                if (target_id === "inquire") {
+                    fetchData();
+                }
             });
         });
     </script>
