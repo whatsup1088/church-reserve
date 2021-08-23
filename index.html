@@ -162,7 +162,6 @@
                         header = d.shift();
 
                     column = Object.assign({}, ...Object.entries(header).map(([a,b]) => ({ [b]: a })));
-                    console.log(column);
 
                     d.forEach(function (row) {
                         retain['第一場 上午 9:00'] = parseInt(row[column['retain_1']]);
@@ -251,6 +250,8 @@
                     })
                     return
                 }
+
+                fetchData();
 
                 items[select_session].forEach(function(value, index){
                     if (value.name === first_name && value.phone === phone) {
