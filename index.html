@@ -182,7 +182,6 @@
                         (items[item.session] || (items[item.session] = [])).push(item);
                     })
 
-                    console.log(items);
                     updateInfo(items);
 
                 }).fail(function() {
@@ -250,8 +249,6 @@
                     })
                     return
                 }
-
-                fetchData();
 
                 items[select_session].forEach(function(value, index){
                     if (value.name === first_name && value.phone === phone) {
