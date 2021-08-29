@@ -129,8 +129,9 @@
 
             let today = new Date(),
                 reserveDate = new Date(new Date().setDate(today.getDate() - today.getDay() + 7)),
-                startReserveDate = new Date(new Date().setDate(reserveDate.getDate() - 6)),
-                endReserveDate = new Date(new Date().setDate(reserveDate.getDate() - 2));
+                startReserveDate = new Date(reserveDate.getTime() - (6 * 86400000)),
+                endReserveDate = new Date(reserveDate.getTime() - (2 * 86400000));
+
 
             if (!between(today.getDate(), startReserveDate.getDate(), endReserveDate.getDate()) && today.getDay() != 6) {
                 updateInfo(items);
