@@ -133,7 +133,7 @@
                 endReserveDate = new Date(reserveDate.getTime() - (2 * 86400000));
 
 
-            if (!between(today.getDate(), startReserveDate.getDate(), endReserveDate.getDate()) && today.getDay() != 6) {
+            if (between(today.getDate(), startReserveDate.getDate(), endReserveDate.getDate()) && today.getDay() != 6) {
                 updateInfo(items);
                 Swal.fire({
                   icon: 'warning',
