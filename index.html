@@ -133,18 +133,18 @@
                 endReserveDate = new Date(reserveDate.getTime() - (2 * 86400000));
 
 
-            if (!between(today.toLocaleDateString(), startReserveDate.toLocaleDateString(), endReserveDate.toLocaleDateString()) && today.getDay() != 6) {
+            if (between(today.toLocaleDateString(), startReserveDate.toLocaleDateString(), endReserveDate.toLocaleDateString()) && today.getDay() != 6) {
                 updateInfo(items);
                 Swal.fire({
                   icon: 'warning',
-                  text: '目前非預約期間',
+                  text: '目前非預約期間1',
                   confirmButtonText: '確認',
                 });
             } else if (!between(today.getTime(), today.setHours(09,00,00), today.setHours(21,00,00)) || today.getDay() == 6) {
                 fetchData();
                 Swal.fire({
                   icon: 'warning',
-                  text: '目前非預約期間',
+                  text: '目前非預約期間2',
                   confirmButtonText: '確認',
                 });
             } else {
