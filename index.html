@@ -62,7 +62,7 @@
         <div class="text-center p-2 mt-2 mb-2 rounded-3">
             <h1>宏恩教會實體禮拜預約平台</h1>
             <div class="alert alert-warning" role="alert">
-                疫情警戒第二級期間，經提防疫計畫後，每場實體聚會人數上限為 <b class="text-danger">166</b> 人<br>
+                疫情警戒第二級期間，經提防疫計畫後，每場實體聚會人數上限為 <b class="text-danger" id="limit">載入中...</b> 人<br>
                 <span class="text-danger">「座位」將按主日當天來教會的進場先後順序拿取號碼牌</span><br>
                 1-100 號在三樓主堂內，101-113 號在三樓梯廳，114-166 號在ㄧ樓
             </div>
@@ -124,7 +124,7 @@
         $(document).ready(function ($) {
             let items = {'第一場 上午 9:00':[],'第二場 上午 10:30':[]},
                 retain = {'第一場 上午 9:00': 0, '第二場 上午 10:30': 0},
-                limit = 166;
+                limit = 0;
 
             const dataSheetURL =
                 "https://sheets.googleapis.com/v4/spreadsheets/1ZkgUOVrsbgHPSXQLzzYRXXNEAs7ckaCzOWGiXU5KCY8/values/table?key=AIzaSyBz-EwHl2quASbDzFAGteprh1oTC60o4dA"
@@ -170,6 +170,7 @@
                     d.forEach(function (row) {
                         retain['第一場 上午 9:00'] = parseInt(row[column['retain_1']]);
                         retain['第二場 上午 10:30'] = parseInt(row[column['retain_2']]);
+                        limit = parseInt(row[column['limit']]);
 
                         if (!row[column['timestamp']] || row[column['is_duplicate']] === 'TRUE' || row[column['is_canceled']] === 'TRUE') {
                             return;
@@ -219,6 +220,7 @@
                 $('#numberOfReserve_2').text(session_2_reserve)
                 $('#numberOfStandBy_1').text(session_1_standby)
                 $('#numberOfStandBy_2').text(session_2_standby)
+                $('#limit').text(limit)
             }
 
             $("#date").html(`
